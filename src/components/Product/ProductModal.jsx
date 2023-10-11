@@ -30,7 +30,7 @@ export const ProductModal = ({
 
   const handleDelete = async () => {
     // TODO: Create delete function with validation in product quantity
-    <Alert severity="success">{"Produto foi deletado, só que não ;)"}</Alert>;
+    <Alert severity="error">{"Produto foi deletado, só que não ;)"}</Alert>;
   };
 
   const handleSave = async (values) => {
