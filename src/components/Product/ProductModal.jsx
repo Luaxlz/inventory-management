@@ -15,7 +15,7 @@ import {
 import { common } from "@mui/material/colors";
 import { Box, bgcolor } from "@mui/system";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 
 export const ProductModal = ({
@@ -30,17 +30,28 @@ export const ProductModal = ({
 
   const handleDelete = async () => {
     // TODO: Create delete function with validation in product quantity
-    <Alert severity="error">{"Produto foi deletado, só que não ;)"}</Alert>;
+    formik.resetForm();
+    setConfirmDelete(false);
+    handleCloseModal();
   };
 
   const handleSave = async (values) => {
     //TODO: Create save functionality
-    setIsLoading(true);
-
-    <Alert severity="success">{"Produto foi salvo, só que não ;)"}</Alert>;
-    setIsLoading(false);
+    formik.resetForm();
     handleCloseModal();
   };
+
+  useEffect(() => {
+    if (product) {
+      formik.setValues({
+        name: product.name,
+        supplier: product.supplier,
+        model: product.model,
+        inventoryLocation: product.inventoryLocation,
+        quantity: product.quantity,
+      });
+    }
+  }, product);
 
   const formik = useFormik({
     initialValues: {
@@ -62,7 +73,10 @@ export const ProductModal = ({
   return (
     <Modal
       open={openModal}
-      onClose={handleCloseModal}
+      onClose={() => {
+        formik.resetForm();
+        handleCloseModal();
+      }}
       sx={{
         display: "flex",
         alignItems: "center",

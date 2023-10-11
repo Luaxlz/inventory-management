@@ -16,7 +16,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const products = [
   {
@@ -74,7 +74,8 @@ export default function Products() {
   };
 
   const handleProductSelect = (product) => {
-    console.log(product);
+    setSelectedProduct(product);
+    setProductModalIsOpen(true);
   };
 
   return (
