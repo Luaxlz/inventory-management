@@ -116,7 +116,7 @@ export default function Sidebar({ children }) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar sx={{ height: "35px" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"

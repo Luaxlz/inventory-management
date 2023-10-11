@@ -1,4 +1,6 @@
 import {
+  IconButton,
+  CardActions,
   Table,
   TableBody,
   TableCell,
@@ -6,12 +8,23 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import NorthEastIcon from "@mui/icons-material/NorthEast";
+import SouthWestIcon from "@mui/icons-material/SouthWest";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 
 import { Box } from "@mui/system";
 
-export const ProductTable = ({ products, handleProductSelect }) => {
-  const handleProductClick = (product) => {
-    handleProductSelect(product);
+export const ProductTable = ({
+  products,
+  handleProductSelect,
+  handleProductSettings,
+}) => {
+  const handleProductClick = (product, action) => {
+    if (action === "settings") {
+      handleProductSettings(product);
+    } else {
+      handleProductSelect(product, action);
+    }
   };
 
   return (
@@ -32,6 +45,9 @@ export const ProductTable = ({ products, handleProductSelect }) => {
               <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>
                 Quantidade
               </TableCell>
+              <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>
+                Ações
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -41,12 +57,47 @@ export const ProductTable = ({ products, handleProductSelect }) => {
                 key={product.id}
                 sx={{
                   "&:hover": { cursor: "pointer" },
-                }}
-                onClick={() => handleProductClick(product)}>
+                }}>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.inventoryLocation}</TableCell>
                 <TableCell>{product.model}</TableCell>
                 <TableCell>{product.quantity}</TableCell>
+                <TableCell>
+                  <CardActions
+                    sx={{
+                      justifyContent: "flex-start",
+                      p: 0,
+                    }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: 1,
+                      }}>
+                      <IconButton
+                        sx={{ p: 0 }}
+                        onClick={() => {
+                          handleProductClick(product, "income");
+                        }}>
+                        <NorthEastIcon color="success" />
+                      </IconButton>
+                      <IconButton
+                        sx={{ p: 0 }}
+                        onClick={() => {
+                          handleProductClick(product, "outcome");
+                        }}>
+                        <SouthWestIcon color="error" />
+                      </IconButton>
+                      <IconButton
+                        sx={{ p: 0 }}
+                        onClick={() => {
+                          handleProductClick(product, "settings");
+                        }}>
+                        <SettingsApplicationsIcon color="primary" />
+                      </IconButton>
+                    </Box>
+                  </CardActions>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -3,20 +3,25 @@ import { ProductCardList } from "@/components/Product/ProductCardList";
 import { ProductModal } from "@/components/Product/ProductModal";
 import { ProductTable } from "@/components/Product/ProductTable";
 import {
-  Box,
   Button,
   Card,
   CardActions,
   CardContent,
   Container,
   Grid,
+  IconButton,
+  Input,
   Pagination,
+  TextField,
   Typography,
   useMediaQuery,
   useTheme,
+  InputAdornment,
 } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Stack, Box } from "@mui/system";
+import SearchIcon from "@mui/icons-material/Search";
 import { useEffect, useState } from "react";
+import { ProductManageModal } from "@/components/Product/ProductManageModal";
 
 const products = [
   {
@@ -68,12 +73,21 @@ export default function Products() {
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [productModalIsOpen, setProductModalIsOpen] = useState(false);
+  const [productManagementModalIsOpen, setProductManagementModalIsOpen] =
+    useState(false);
+  const [actionType, setActionType] = useState(null);
 
   const fetchProducts = async () => {
     return products;
   };
 
-  const handleProductSelect = (product) => {
+  const handleProductSelect = (product, action) => {
+    setActionType(action);
+    setSelectedProduct(product);
+    setProductManagementModalIsOpen(true);
+  };
+
+  const handleProductSettings = (product) => {
     setSelectedProduct(product);
     setProductModalIsOpen(true);
   };
@@ -100,36 +114,43 @@ export default function Products() {
                     sx={{
                       display: "flex",
                       flexDirection: mdUp ? "row" : "column",
-                      justifyContent: "space-between",
+                      justifyContent: mdUp ? "space-between" : "space-around",
                       maxHeight: "65px",
                       alignItems: "center",
                       gap: "10px",
+                      p: "8px",
                     }}>
                     <Stack sx={{ flexDirection: "row" }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: lgUp ? "flex-end" : "center",
-                        }}>
-                        {!selectedProduct && (
+                      {!selectedProduct && (
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: mdUp ? "row" : "column",
+                            justifyContent: lgUp ? "center" : "flex-end",
+                            gap: "10px",
+                          }}>
                           <Button
                             variant="contained"
-                            onClick={() => setProductModalIsOpen(true)}
-                            sx={{ mb: 2 }}>
+                            onClick={() => setProductModalIsOpen(true)}>
                             Cadastrar Produto
                           </Button>
-                        )}
-                      </div>
+                          <TextField
+                            name="product-search-bar"
+                            value={""}
+                            label="Pesquisar produtos"
+                            variant="outlined"
+                            type="search"
+                            size="small"
+                          />
+                        </div>
+                      )}
                     </Stack>
                   </Box>
-
-                  <Typography sx={{ mt: 8 }} variant="h5">
-                    Produtos
-                  </Typography>
 
                   {mdUp ? (
                     <ProductTable
                       handleProductSelect={handleProductSelect}
+                      handleProductSettings={handleProductSettings}
                       products={products || []}
                     />
                   ) : (
@@ -169,6 +190,18 @@ export default function Products() {
         fetchProducts={fetchProducts}
         handleCloseModal={() => {
           setProductModalIsOpen(false);
+          setSelectedProduct(null);
+        }}
+      />
+      <ProductManageModal
+        sx={{ width: { xs: "100%", sm: "50%" }, height: "auto" }}
+        openModal={productManagementModalIsOpen}
+        product={selectedProduct}
+        action={actionType}
+        fetchProducts={fetchProducts}
+        handleCloseModal={() => {
+          setActionType(null);
+          setProductManagementModalIsOpen(false);
           setSelectedProduct(null);
         }}
       />

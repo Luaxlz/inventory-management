@@ -1,5 +1,8 @@
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, IconButton, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import NorthEastIcon from "@mui/icons-material/NorthEast";
+import SouthWestIcon from "@mui/icons-material/SouthWest";
+import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 
 export const ProductCard = ({ product, onClick }) => {
   return (
@@ -22,8 +25,30 @@ export const ProductCard = ({ product, onClick }) => {
               <Typography variant="p">{product.name}</Typography>
             </Stack>
           </Stack>
-
           <Stack spacing={1}>{product.quantity}</Stack>
+          <Stack sx={{ display: "flex", flexDirection: "row" }}>
+            <IconButton
+              sx={{ p: 0 }}
+              onClick={() => {
+                handleProductClick(product, "income");
+              }}>
+              <NorthEastIcon color="success" />
+            </IconButton>
+            <IconButton
+              sx={{ p: 0 }}
+              onClick={() => {
+                handleProductClick(product, "outcome");
+              }}>
+              <SouthWestIcon color="error" />
+            </IconButton>
+            <IconButton
+              sx={{ p: 0 }}
+              onClick={() => {
+                handleProductClick(product, "settings");
+              }}>
+              <SettingsApplicationsIcon color="primary" />
+            </IconButton>
+          </Stack>
         </Stack>
       </CardContent>
     </Card>

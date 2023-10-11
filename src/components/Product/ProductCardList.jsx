@@ -1,7 +1,11 @@
 import { Box, Typography } from "@mui/material";
 import { ProductCard } from "./ProductCard";
 
-export const ProductCardList = ({ products = [], handleProductSelect }) => {
+export const ProductCardList = ({
+  products = [],
+  handleProductSelect,
+  handleProductSettings,
+}) => {
   return (
     <Box>
       {products?.length ? (
