@@ -1,5 +1,6 @@
 "use client";
 import { ProductCardList } from "@/components/Product/ProductCardList";
+import { ProductModal } from "@/components/Product/ProductModal";
 import { ProductTable } from "@/components/Product/ProductTable";
 import {
   Box,
@@ -67,6 +68,10 @@ export default function Products() {
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [productModalIsOpen, setProductModalIsOpen] = useState(false);
+
+  const fetchProducts = async () => {
+    return products;
+  };
 
   const handleProductSelect = (product) => {
     console.log(product);
