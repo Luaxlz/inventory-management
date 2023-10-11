@@ -73,87 +73,99 @@ export default function Products() {
   };
 
   return (
-    <Box
-      component="main"
-      sx={{
-        flexGrow: 1,
-        py: 2,
-      }}>
-      <Container maxWidth="xl">
-        <Grid container spacing={3}>
-          <Grid item={true} xs={12}>
-            <Card
-              sx={{
-                minHeight: "70vh",
-                height: "100%",
-                width: "100%",
-              }}>
-              <CardContent>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: mdUp ? "row" : "column",
-                    justifyContent: "space-between",
-                    maxHeight: "65px",
-                    alignItems: "center",
-                    gap: "10px",
-                  }}>
-                  <Stack sx={{ flexDirection: "row" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: lgUp ? "flex-end" : "center",
-                      }}>
-                      {!selectedProduct && (
-                        <Button
-                          variant="contained"
-                          onClick={() => setProductModalIsOpen(true)}
-                          sx={{ mb: 2 }}>
-                          Cadastrar Produto
-                        </Button>
-                      )}
-                    </div>
-                  </Stack>
-                </Box>
+    <>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          py: 2,
+        }}>
+        <Container maxWidth="xl">
+          <Grid container spacing={3}>
+            <Grid item={true} xs={12}>
+              <Card
+                sx={{
+                  minHeight: "70vh",
+                  height: "100%",
+                  width: "100%",
+                }}>
+                <CardContent>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: mdUp ? "row" : "column",
+                      justifyContent: "space-between",
+                      maxHeight: "65px",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}>
+                    <Stack sx={{ flexDirection: "row" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: lgUp ? "flex-end" : "center",
+                        }}>
+                        {!selectedProduct && (
+                          <Button
+                            variant="contained"
+                            onClick={() => setProductModalIsOpen(true)}
+                            sx={{ mb: 2 }}>
+                            Cadastrar Produto
+                          </Button>
+                        )}
+                      </div>
+                    </Stack>
+                  </Box>
 
-                <Typography sx={{ mt: 8 }} variant="h5">
-                  Produtos
-                </Typography>
+                  <Typography sx={{ mt: 8 }} variant="h5">
+                    Produtos
+                  </Typography>
 
-                {mdUp ? (
-                  <ProductTable
-                    handleProductSelect={handleProductSelect}
-                    products={products || []}
-                  />
-                ) : (
-                  <ProductCardList
-                    products={products || []}
-                    handleProductSelect={handleProductSelect}
-                  />
-                )}
-              </CardContent>
-              {/* <CardActions sx={{ justifyContent: "center" }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  {totalPages > 1 && (
-                    <Pagination
-                      onChange={(_e, value) => {
-                        SecurityUpdateGood(value);
-                      }}
-                      count={totalPages}
-                      size="small"
+                  {mdUp ? (
+                    <ProductTable
+                      handleProductSelect={handleProductSelect}
+                      products={products || []}
+                    />
+                  ) : (
+                    <ProductCardList
+                      products={products || []}
+                      handleProductSelect={handleProductSelect}
                     />
                   )}
-                </Box>
-              </CardActions> */}
-            </Card>
+                </CardContent>
+                {/* <CardActions sx={{ justifyContent: "center" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {totalPages > 1 && (
+                      <Pagination
+                        onChange={(_e, value) => {
+                          SecurityUpdateGood(value);
+                        }}
+                        count={totalPages}
+                        size="small"
+                      />
+                    )}
+                  </Box>
+                </CardActions> */}
+              </Card>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-    </Box>
+        </Container>
+      </Box>
+      <ProductModal
+        sx={{ width: { xs: "100%", sm: "50%" }, height: "auto" }}
+        openModal={productModalIsOpen}
+        product={selectedProduct}
+        fetchProducts={fetchProducts}
+        handleCloseModal={() => {
+          setProductModalIsOpen(false);
+          setSelectedProduct(null);
+        }}
+      />
+    </>
   );
 }
