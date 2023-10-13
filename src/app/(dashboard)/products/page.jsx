@@ -102,7 +102,7 @@ export default function Products() {
         }}>
         <Container maxWidth="xl">
           <Grid container spacing={3}>
-            <Grid item={true} xs={12}>
+            <Grid item xs={12}>
               <Card
                 sx={{
                   minHeight: "70vh",
@@ -114,11 +114,10 @@ export default function Products() {
                     sx={{
                       display: "flex",
                       flexDirection: mdUp ? "row" : "column",
-                      justifyContent: mdUp ? "space-between" : "space-around",
-                      maxHeight: "65px",
+                      justifyContent: "space-between",
+                      maxHeight: "100%",
                       alignItems: "center",
                       gap: "10px",
-                      p: "8px",
                     }}>
                     <Stack sx={{ flexDirection: "row" }}>
                       {!selectedProduct && (
