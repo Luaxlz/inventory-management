@@ -6,6 +6,33 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Product {
+  id          String        @id @default(uuid())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  name        String        @unique
+  supplier    String?
+  brand       String?
+  model       String?
+  location    String
+  quantity    Int
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  Product     Product  @relation(fields: [productId], references: [id])
+  productId   String
+  description String
+  actionType  String
+  quantity    Int
+  user        String
+
+  @@index([productId])
 }
