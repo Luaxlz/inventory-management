@@ -5,22 +5,15 @@ import { ProductTable } from "@/components/Product/ProductTable";
 import {
   Button,
   Card,
-  CardActions,
   CardContent,
   Container,
   Grid,
-  IconButton,
-  Input,
-  Pagination,
   TextField,
-  Typography,
   useMediaQuery,
   useTheme,
-  InputAdornment,
 } from "@mui/material";
 import { Stack, Box } from "@mui/system";
-import SearchIcon from "@mui/icons-material/Search";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ProductManageModal } from "@/components/Product/ProductManageModal";
 
 const products = [
@@ -75,16 +68,18 @@ export default function Products() {
   const [productModalIsOpen, setProductModalIsOpen] = useState(false);
   const [productManagementModalIsOpen, setProductManagementModalIsOpen] =
     useState(false);
-  const [actionType, setActionType] = useState(null);
+  const [actionType, setActionType] = useState("");
 
   const fetchProducts = async () => {
     return products;
   };
 
-  const handleProductSelect = (product, action) => {
-    setActionType(action);
-    setSelectedProduct(product);
-    setProductManagementModalIsOpen(true);
+  const handleProductAction = (product, action) => {
+    if (action) {
+      setActionType(action);
+      setSelectedProduct(product);
+      setProductManagementModalIsOpen(true);
+    }
   };
 
   const handleProductSettings = (product) => {
@@ -130,7 +125,10 @@ export default function Products() {
                           }}>
                           <Button
                             variant="contained"
-                            onClick={() => setProductModalIsOpen(true)}>
+                            onClick={(e) => {
+                              e.preventDefault;
+                              setProductModalIsOpen(true);
+                            }}>
                             Cadastrar Produto
                           </Button>
                           <TextField
@@ -148,14 +146,15 @@ export default function Products() {
 
                   {mdUp ? (
                     <ProductTable
-                      handleProductSelect={handleProductSelect}
+                      handleProductAction={handleProductAction}
                       handleProductSettings={handleProductSettings}
                       products={products || []}
                     />
                   ) : (
                     <ProductCardList
                       products={products || []}
-                      handleProductSelect={handleProductSelect}
+                      handleProductAction={handleProductAction}
+                      handleProductSettings={handleProductSettings}
                     />
                   )}
                 </CardContent>
@@ -199,7 +198,7 @@ export default function Products() {
         action={actionType}
         fetchProducts={fetchProducts}
         handleCloseModal={() => {
-          setActionType(null);
+          setActionType("");
           setProductManagementModalIsOpen(false);
           setSelectedProduct(null);
         }}
