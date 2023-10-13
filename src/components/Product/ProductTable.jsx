@@ -59,7 +59,7 @@ export const ProductTable = ({
                   "&:hover": { cursor: "pointer" },
                 }}>
                 <TableCell>{product.name}</TableCell>
-                <TableCell>{product.inventoryLocation}</TableCell>
+                <TableCell>{product.location}</TableCell>
                 <TableCell>{product.model}</TableCell>
                 <TableCell>{product.quantity}</TableCell>
                 <TableCell>

@@ -13,10 +13,11 @@ import {
   useTheme,
 } from "@mui/material";
 import { Stack, Box } from "@mui/system";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProductManageModal } from "@/components/Product/ProductManageModal";
+import { getAllProducts } from "@/utils/products-utils";
 
-const products = [
+const products_mock = [
   {
     id: 1,
     name: "Parafuso",
@@ -72,7 +73,9 @@ export default function Products() {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
-    return products;
+    const { products } = await getAllProducts();
+    console.log("Produtos: ", products);
+    setProducts(products);
   };
 
   const handleProductAction = (product, action) => {
@@ -87,6 +90,10 @@ export default function Products() {
     setSelectedProduct(product);
     setProductModalIsOpen(true);
   };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <>

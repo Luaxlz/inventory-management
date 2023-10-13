@@ -29,10 +29,8 @@ export const ProductModal = ({
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const handleDelete = async () => {
-    // TODO: Create delete function with validation in product quantity
-    formik.resetForm();
-    setConfirmDelete(false);
-    handleCloseModal();
+    setIsLoading(true);
+    await createProduct(values);
   };
 
   const handleSave = async (values) => {
@@ -46,8 +44,9 @@ export const ProductModal = ({
       formik.setValues({
         name: product.name,
         supplier: product.supplier,
+        brand: product.brand,
         model: product.model,
-        inventoryLocation: product.inventoryLocation,
+        location: product.location,
         quantity: product.quantity,
       });
     }
@@ -57,15 +56,17 @@ export const ProductModal = ({
     initialValues: {
       name: "",
       supplier: "",
+      brand: "",
       model: "",
-      inventoryLocation: "",
+      location: "",
       quantity: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required(),
       supplier: Yup.string(),
-      model: Yup.string().required(),
-      inventoryLocation: Yup.string().required(),
+      brand: Yup.string(),
+      model: Yup.string(),
+      location: Yup.string().required(),
       quantity: Yup.number().required(),
     }),
   });
@@ -117,6 +118,14 @@ export const ProductModal = ({
             />
             <TextField
               fullWidth
+              name="brand"
+              value={formik.values.brand}
+              label="Marca"
+              onChange={formik.handleChange}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
               name="model"
               value={formik.values.model}
               label="Modelo do Produto"
@@ -125,8 +134,8 @@ export const ProductModal = ({
             />
             <TextField
               fullWidth
-              name="inventoryLocation"
-              value={formik.values.inventoryLocation}
+              name="location"
+              value={formik.values.location}
               label="Localização no Estoque"
               onChange={formik.handleChange}
               sx={{ mb: 2 }}
