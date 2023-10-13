@@ -69,6 +69,7 @@ export default function Products() {
   const [productManagementModalIsOpen, setProductManagementModalIsOpen] =
     useState(false);
   const [actionType, setActionType] = useState("");
+  const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
     return products;
