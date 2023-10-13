@@ -16,14 +16,14 @@ import { Box } from "@mui/system";
 
 export const ProductTable = ({
   products,
-  handleProductSelect,
+  handleProductAction,
   handleProductSettings,
 }) => {
   const handleProductClick = (product, action) => {
     if (action === "settings") {
       handleProductSettings(product);
     } else {
-      handleProductSelect(product, action);
+      handleProductAction(product, action);
     }
   };
 

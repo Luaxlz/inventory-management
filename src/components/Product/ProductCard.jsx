@@ -2,17 +2,17 @@ import { Card, CardContent, IconButton, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import NorthEastIcon from "@mui/icons-material/NorthEast";
 import SouthWestIcon from "@mui/icons-material/SouthWest";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 
-export const ProductCard = ({ product, onClick }) => {
+export const ProductCard = ({ product, handleMobileAction }) => {
   return (
     <Card
-      onClick={onClick}
       sx={{
         width: "100%",
         mt: 2,
         mb: 2,
         "&:hover": { cursor: "pointer" },
+        fontSize: 12,
+        fontWeight: 600,
       }}>
       <CardContent>
         <Stack
@@ -26,27 +26,27 @@ export const ProductCard = ({ product, onClick }) => {
             </Stack>
           </Stack>
           <Stack spacing={1}>{product.quantity}</Stack>
-          <Stack sx={{ display: "flex", flexDirection: "row" }}>
+          <Stack
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "5px",
+            }}>
             <IconButton
               sx={{ p: 0 }}
-              onClick={() => {
-                handleProductClick(product, "income");
+              onClick={(e) => {
+                e.preventDefault;
+                handleMobileAction(product, "income");
               }}>
               <NorthEastIcon color="success" />
             </IconButton>
             <IconButton
               sx={{ p: 0 }}
-              onClick={() => {
-                handleProductClick(product, "outcome");
+              onClick={(e) => {
+                e.preventDefault;
+                handleMobileAction(product, "outcome");
               }}>
               <SouthWestIcon color="error" />
-            </IconButton>
-            <IconButton
-              sx={{ p: 0 }}
-              onClick={() => {
-                handleProductClick(product, "settings");
-              }}>
-              <SettingsApplicationsIcon color="primary" />
             </IconButton>
           </Stack>
         </Stack>
