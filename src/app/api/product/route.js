@@ -5,7 +5,11 @@ const prisma = new PrismaClient();
 
 export async function GET(req, params) {
   try {
-    const products = await prisma.product.findMany();
+    const products = await prisma.product.findMany({
+      where: {
+        deletedAt: null,
+      },
+    });
     return NextResponse.json({ products }, { status: 200 });
   } catch (error) {
     console.log("Erro ao buscar produtos: ", error);

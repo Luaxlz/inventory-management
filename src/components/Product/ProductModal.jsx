@@ -1,6 +1,10 @@
 "use client";
 import {
-  Alert,
+  createProduct,
+  deleteProduct,
+  updateProduct,
+} from "@/utils/products-utils";
+import {
   Button,
   CircularProgress,
   Dialog,
@@ -13,7 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { common } from "@mui/material/colors";
-import { Box, bgcolor } from "@mui/system";
+import { Box } from "@mui/system";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
@@ -28,15 +32,55 @@ export const ProductModal = ({
   const [isLoading, setIsLoading] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const handleDelete = async () => {
-    setIsLoading(true);
-    await createProduct(values);
+  const handleDelete = async (product) => {
+    const { id } = product;
+    try {
+      setIsLoading(true);
+      await deleteProduct(id);
+    } catch (error) {
+      console.log("Houve um erro ao deletar produto: ", error);
+      throw new Error(error);
+    } finally {
+      setConfirmDelete(false);
+      setIsLoading(false);
+      formik.resetForm();
+      fetchProducts();
+      window.alert("Produto foi deletado com sucesso!");
+      handleCloseModal();
+    }
   };
 
   const handleSave = async (values) => {
-    //TODO: Create save functionality
-    formik.resetForm();
-    handleCloseModal();
+    if (product) {
+      const { id } = product;
+      try {
+        setIsLoading(true);
+        await updateProduct(values, id);
+        window.alert("Produto atualizado com sucesso!");
+      } catch (error) {
+        console.log("Erro ao criar produto: ", error);
+        throw new Error(error);
+      } finally {
+        setIsLoading(false);
+        formik.resetForm();
+        fetchProducts();
+        handleCloseModal();
+      }
+    } else {
+      try {
+        setIsLoading(true);
+        await createProduct(values);
+        window.alert("Produto criado com sucesso!"); //TODO: Create a basic notification system
+      } catch (error) {
+        console.log("Erro ao criar produto: ", error);
+        throw new Error(error);
+      } finally {
+        setIsLoading(false);
+        formik.resetForm();
+        fetchProducts();
+        handleCloseModal();
+      }
+    }
   };
 
   useEffect(() => {
@@ -148,6 +192,7 @@ export const ProductModal = ({
               label="Quantidade em Estoque"
               onChange={formik.handleChange}
               sx={{ mb: 2 }}
+              disabled={product}
             />
           </DialogContent>
           <DialogActions
@@ -179,16 +224,18 @@ export const ProductModal = ({
                 alignItems: "center",
               }}>
               <Stack>
-                <Button
-                  onClick={() => {
-                    handleCloseModal();
-                    formik.resetForm();
-                  }}
-                  variant="outlined"
-                  color="error"
-                  sx={{ mr: 1 }}>
-                  Cancelar
-                </Button>
+                {!isLoading && (
+                  <Button
+                    onClick={() => {
+                      handleCloseModal();
+                      formik.resetForm();
+                    }}
+                    variant="outlined"
+                    color="error"
+                    sx={{ mr: 1 }}>
+                    Cancelar
+                  </Button>
+                )}
               </Stack>
               <Stack>
                 <Button
@@ -214,7 +261,7 @@ export const ProductModal = ({
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setConfirmDelete(false)}>Cancelar</Button>
-            <Button onClick={handleDelete}>Confirmar</Button>
+            <Button onClick={() => handleDelete(product)}>Confirmar</Button>
           </DialogActions>
         </Dialog>
       </Box>

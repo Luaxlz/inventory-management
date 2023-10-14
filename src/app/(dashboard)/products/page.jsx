@@ -74,8 +74,8 @@ export default function Products() {
 
   const fetchProducts = async () => {
     const { products } = await getAllProducts();
-    console.log("Produtos: ", products);
     setProducts(products);
+    setSelectedProduct(null);
   };
 
   const handleProductAction = (product, action) => {
@@ -89,6 +89,13 @@ export default function Products() {
   const handleProductSettings = (product) => {
     setSelectedProduct(product);
     setProductModalIsOpen(true);
+  };
+
+  const handleCloseModal = async () => {
+    setSelectedProduct(null);
+    setActionType(null);
+    setProductManagementModalIsOpen(false);
+    setProductModalIsOpen(false);
   };
 
   useEffect(() => {
@@ -194,10 +201,7 @@ export default function Products() {
         openModal={productModalIsOpen}
         product={selectedProduct}
         fetchProducts={fetchProducts}
-        handleCloseModal={() => {
-          setProductModalIsOpen(false);
-          setSelectedProduct(null);
-        }}
+        handleCloseModal={handleCloseModal}
       />
       <ProductManageModal
         sx={{ width: { xs: "100%", sm: "50%" }, height: "auto" }}
@@ -205,11 +209,7 @@ export default function Products() {
         product={selectedProduct}
         action={actionType}
         fetchProducts={fetchProducts}
-        handleCloseModal={() => {
-          setActionType("");
-          setProductManagementModalIsOpen(false);
-          setSelectedProduct(null);
-        }}
+        handleCloseModal={handleCloseModal}
       />
     </>
   );
