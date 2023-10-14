@@ -15,6 +15,7 @@ model Product {
   id          String        @id @default(uuid())
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime?
   name        String        @unique
   supplier    String?
   brand       String?
