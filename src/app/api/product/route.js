@@ -17,14 +17,14 @@ export async function GET(req, params) {
 }
 
 export async function POST(req) {
-  const productBody = req.json();
+  const productBody = await req.json();
   try {
     const newProduct = await prisma.product.create({
       data: productBody,
     });
 
     return NextResponse.json(
-      { data: "Produto criado com sucesso!", newProduct },
+      { data: "Produto criado com sucesso!" },
       { status: 200 }
     );
   } catch (createError) {
