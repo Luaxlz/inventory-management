@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# invControl
 
-## Getting Started
+## ATENÇÃO: Projeto ainda em desenvolvimento!
 
-First, run the development server:
+## Descrição
+Este projeto é um sistema de controle de estoque desenvolvido com Next.js, Material-UI, Prisma e PostgreSQL. Ele permite que os usuários realizem operações de CRUD em produtos, gerem relatórios de entrada e saída, e façam o controle de estoque de maneira simples e eficiente.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tecnologias Utilizadas
+- [Next.js](https://nextjs.org/)
+- [React](https://reactjs.org/) (usando JSX)
+- [Material-UI](https://material-ui.com/)
+- [Prisma](https://www.prisma.io/)
+- [MySQL](https://hub.docker.com/_/mysql) (Usando Docker local)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Pré-requisitos
+- Node.js: Certifique-se de ter o Node.js instalado na sua máquina.
+- PostgreSQL: Você precisa de um banco de dados PostgreSQL para armazenar seus dados. Certifique-se de tê-lo instalado e configurado, para uso local recomendo utilizar docker.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Instalação
+1. Clone o repositório: `git clone https://github.com/Luaxlz/inventory-management`
+2. Navegue até a pasta do projeto: `inventory-management`
+3. Instale as dependências: `npm install`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Configuração
+1. Crie um container MySQL localmente em sua maquina utilizando docker (link na seção tecnologias).
+2. Crie um arquivo `.env.local` na raiz do projeto para armazenar suas variáveis de ambiente. Você pode seguir um modelo como este:
+   `DATABASE_URL="sua-url-de-conexão-com-o-MySQL"`
+3. Execute as migrações do Prisma para criar as tabelas no banco de dados: `npx prisma migrate dev`
 
-## Learn More
+## Uso
+Para iniciar o projeto localmente, use o seguinte comando: `npm run dev`
 
-To learn more about Next.js, take a look at the following resources:
+Acesse a aplicação no seu navegador em: `http://localhost:3000`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contribuições
+Por enquanto não estarei aceitando contribuições, assim que o projeto estiver finalizado irei abrir para receber contribuições.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Licença
+Este projeto é licenciado sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para obter mais detalhes.
