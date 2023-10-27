@@ -3,14 +3,37 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function GET(req, params) {
+export async function GET(req) {
+  const { searchParams } = new URL(req.url);
+  const productQuery = { where: { deletedAt: null } };
+  const name = searchParams.get("name");
+  const page = searchParams.get("page");
+  const limit = 6;
+
+  if (name && name != "all") {
+    productQuery.where.name = name;
+  }
+
+  const paginationQuery = {
+    skip: (page - 1) * limit,
+    take: limit,
+    orderBy: { name: "asc" },
+  };
+
   try {
+    const productCount = await prisma.product.count(productQuery);
+
     const products = await prisma.product.findMany({
-      where: {
-        deletedAt: null,
-      },
+      ...productQuery,
+      ...paginationQuery,
     });
-    return NextResponse.json({ products }, { status: 200 });
+
+    const totalPages = Math.ceil(productCount / limit);
+
+    return NextResponse.json(
+      { data: { products, totalPages } },
+      { status: 200 }
+    );
   } catch (error) {
     console.log("Erro ao buscar produtos: ", error);
     return NextResponse.json(

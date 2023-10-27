@@ -32,16 +32,32 @@ export async function PATCH(req, { params }) {
   const productId = params.id;
   const productData = await req.json();
   try {
-    await prisma.product.update({
-      where: {
-        id: productId,
-        deletedAt: null,
-      },
-      data: {
-        ...productData,
-        updatedAt: new Date(),
-      },
-    });
+    if (productData.actionType) {
+      await prisma.product.update({
+        where: {
+          id: productId,
+          deletedAt: null,
+        },
+        data: {
+          quantity: {
+            [productData.actionType === "income" ? "increment" : "decrement"]:
+              Math.abs(productData.quantity),
+          },
+          updatedAt: new Date(),
+        },
+      });
+    } else {
+      await prisma.product.update({
+        where: {
+          id: productId,
+          deletedAt: null,
+        },
+        data: {
+          ...productData,
+          updatedAt: new Date(),
+        },
+      });
+    }
 
     return NextResponse.json(
       { data: "Produto foi atualizado com sucesso!" },

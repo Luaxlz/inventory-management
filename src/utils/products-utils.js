@@ -1,10 +1,13 @@
-export async function getAllProducts() {
+export async function getAllProducts(filterProduct, page) {
+  const productName = filterProduct ? filterProduct.name : "all";
   try {
-    const data = await fetch("/api/product", {
+    const {
+      data: { products, totalPages },
+    } = await fetch(`/api/product/?name=${productName}&page=${page}`, {
       method: "GET",
     }).then((response) => response.json());
 
-    return data;
+    return { products, totalPages };
   } catch (error) {
     console.log("Houve um erro ao buscar produtos: ", error);
     throw new Error(error);

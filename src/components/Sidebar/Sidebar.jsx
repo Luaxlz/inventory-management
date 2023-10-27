@@ -135,8 +135,12 @@ export default function Sidebar({ children }) {
               component="div"
               fontFamily={roboto}
               color={"white"}
-              onClick={(e) => handlePageNav(e, "")}>
-              ESTOQUE
+              onClick={(e) => {
+                e.preventDefault;
+                handleDrawerClose();
+                router.push("/products");
+              }}>
+              <span style={{ color: "red" }}>Inv</span>Control
             </Typography>
           </Button>
         </Toolbar>
@@ -155,7 +159,11 @@ export default function Sidebar({ children }) {
         <List>
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
-              onClick={(e) => handlePageNav(e, "products")}
+              onClick={(e) => {
+                e.preventDefault;
+                handleDrawerClose();
+                router.push("/products");
+              }}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
@@ -172,7 +180,11 @@ export default function Sidebar({ children }) {
               <ListItemText
                 primary={"Produtos"}
                 sx={{ opacity: open ? 1 : 0 }}
-                onClick={(e) => handlePageNav(e, "products")}
+                onClick={(e) => {
+                  e.preventDefault;
+                  handleDrawerClose();
+                  router.push("/products");
+                }}
               />
             </ListItemButton>
           </ListItem>
@@ -181,7 +193,11 @@ export default function Sidebar({ children }) {
         <List>
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
-              onClick={(e) => handlePageNav(e, "reports")}
+              onClick={(e) => {
+                e.preventDefault;
+                handleDrawerClose();
+                router.push("/transactions");
+              }}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
@@ -196,32 +212,12 @@ export default function Sidebar({ children }) {
                 <AssessmentIcon />
               </ListItemIcon>
               <ListItemText
-                onClick={(e) => handlePageNav(e, "reports")}
-                primary={"Relatórios"}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-
-          <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              onClick={(e) => handlePageNav(e, "help")}
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}>
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}>
-                <HelpCenterIcon />
-              </ListItemIcon>
-              <ListItemText
-                onClick={(e) => handlePageNav(e, "help")}
-                primary={"Ajuda"}
+                onClick={(e) => {
+                  e.preventDefault;
+                  handleDrawerClose();
+                  router.push("/transactions");
+                }}
+                primary={"Movimentações"}
                 sx={{ opacity: open ? 1 : 0 }}
               />
             </ListItemButton>
