@@ -10,7 +10,7 @@ Este projeto é um sistema de controle de estoque desenvolvido com Next.js, Mate
 - [React](https://reactjs.org/) (usando JSX)
 - [Material-UI](https://material-ui.com/)
 - [Prisma](https://www.prisma.io/)
-- [PostgreSQL](https://www.postgresql.org/)
+- [MySQL](https://hub.docker.com/_/mysql) (Usando Docker local)
 
 ## Pré-requisitos
 - Node.js: Certifique-se de ter o Node.js instalado na sua máquina.
@@ -22,9 +22,10 @@ Este projeto é um sistema de controle de estoque desenvolvido com Next.js, Mate
 3. Instale as dependências: `npm install`
 
 ## Configuração
-1. Crie um arquivo `.env.local` na raiz do projeto para armazenar suas variáveis de ambiente. Você pode seguir um modelo como este:
-   `DATABASE_URL="sua-url-de-conexão-com-o-PostgreSQL"`
-2. Execute as migrações do Prisma para criar as tabelas no banco de dados: `npx prisma migrate dev`
+1. Crie um container MySQL localmente em sua maquina utilizando docker (link na seção tecnologias).
+2. Crie um arquivo `.env.local` na raiz do projeto para armazenar suas variáveis de ambiente. Você pode seguir um modelo como este:
+   `DATABASE_URL="sua-url-de-conexão-com-o-MySQL"`
+3. Execute as migrações do Prisma para criar as tabelas no banco de dados: `npx prisma migrate dev`
 
 ## Uso
 Para iniciar o projeto localmente, use o seguinte comando: `npm run dev`
