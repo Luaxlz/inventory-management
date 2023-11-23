@@ -1,5 +1,7 @@
 # invControl
 
+<img src="https://raw.githubusercontent.com/Luaxlz/inventory-management/master/public/desktop-home-new-nav.png"/>
+
 ## ATENÇÃO: Projeto ainda em desenvolvimento!
 
 ## Descrição
